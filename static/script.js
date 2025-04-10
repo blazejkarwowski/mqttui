@@ -1,6 +1,7 @@
 const socket = io({
     path: window.SOCKETIO_CONNECT_PATH
 });
+const relative_path = window.RELATIVE_PATH;
 let messageChart;
 let network;
 let nodes;
@@ -181,7 +182,7 @@ document.getElementById('publish-form').addEventListener('submit', function(e) {
     const topic = document.getElementById('topic').value;
     const message = document.getElementById('message').value;
     
-    fetch('/publish', {
+    fetch(relative_path+'/publish', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -194,7 +195,7 @@ document.getElementById('publish-form').addEventListener('submit', function(e) {
 });
 
 function updateStats() {
-    fetch('/stats')
+    fetch(relative_path+'/stats')
         .then(response => response.json())
         .then(data => {
             document.getElementById('connection-count').textContent = data.connection_count;
@@ -246,7 +247,7 @@ function initDebugBar() {
 }
 
 function toggleDebugBar() {
-    fetch('/toggle-debug-bar', { method: 'POST' })
+    fetch(relative_path+'/toggle-debug-bar', { method: 'POST' })
         .then(response => response.json())
         .then(data => {
             debugBar.style.display = data.enabled ? 'block' : 'none';
@@ -256,7 +257,7 @@ function toggleDebugBar() {
 
 function closeDebugBar() {
     debugBar.style.display = 'none';
-    fetch('/toggle-debug-bar', { method: 'POST' });
+    fetch(relative_path+'/toggle-debug-bar', { method: 'POST' });
     debugBarToggle.classList.remove('active');
 }
 
@@ -265,7 +266,7 @@ function trackClientPerformance() {
     const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
     const domReadyTime = perfData.domContentLoadedEventEnd - perfData.navigationStart;
 
-    fetch('/record-client-performance', {
+    fetch(relative_path+'/record-client-performance', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -278,7 +279,7 @@ function trackClientPerformance() {
 }
 
 function updateDebugBar() {
-    fetch('/debug-bar')
+    fetch(relative_path+'/debug-bar')
         .then(response => response.json())
         .then(data => {
             let content = '<div class="debug-content">';
