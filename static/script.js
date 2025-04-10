@@ -1,4 +1,6 @@
-const socket = io();
+const socket = io({
+    path: window.SOCKETIO_CONNECT_PATH
+});
 let messageChart;
 let network;
 let nodes;
