@@ -178,7 +178,7 @@ mqtt_client.on_disconnect = on_disconnect
 def index():
     script_name = request.environ.get('SCRIPT_NAME', '')
     socketio_path = f"{script_name}/socket.io/"
-    return render_template('index.html', messages=messages, topics=list(topics), socketio_connect_path=socketio_path)
+    return render_template('index.html', messages=messages, topics=list(topics), socketio_connect_path=socketio_path, relative_path=script_name)
 
 @app.route('/publish', methods=['POST'])
 def publish_message():
